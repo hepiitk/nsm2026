@@ -645,7 +645,7 @@ a:hover { text-decoration-thickness: 2px; }
   color: var(--ink-low); border: 1px solid var(--rule-strong); border-radius: 999px; vertical-align: 0.1em;
 }
 .copy-email[data-copy-ready]:hover::after { color: var(--link); border-color: var(--link); }
-.copy-email.is-copied::after { content: "Copied ✓"; color: #fff; background: var(--link); border-color: var(--link); }
+.copy-email.is-copied::after, .copy-email[data-copy-ready].is-copied:hover::after { content: "Copied ✓"; color: #fff; background: var(--link); border-color: var(--link); }
 
 /* 8.11 A note with confirmed information (unlike the dashed "to be announced" note) */
 .callout {
@@ -939,6 +939,19 @@ a.sponsor:hover { border-color: var(--ember); box-shadow: var(--shadow-2); }
 .list-tools__count { flex: 1 1 12rem; margin: 0; padding-bottom: 0.55rem; text-align: right; font-family: var(--font-ui); font-size: 0.85rem; color: var(--ink-low); }
 @media (max-width: 640px) { .list-tools__count { text-align: left; padding-bottom: 0; } }
 .list-tools__note { margin-bottom: var(--sp-4); }
+/* sortable column headings (js/main.js, section 8): click the arrow to sort, again to reverse */
+.sort-btn {
+  display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.25rem 0.1rem; margin: -0.25rem -0.1rem;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+  background: none; border: 0; border-radius: 4px; cursor: pointer;
+}
+.sort-btn svg { flex: none; fill: currentColor; }
+.sort-btn path { opacity: 0.35; transition: opacity 150ms ease; }
+.sort-btn:hover { color: var(--ink-hi); }
+.sort-btn:hover path { opacity: 0.6; }
+.sort-btn:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+th[aria-sort] .sort-btn { color: var(--ink-hi); }
+th[aria-sort="ascending"] .sort-btn__up, th[aria-sort="descending"] .sort-btn__down { opacity: 1; fill: var(--ember); }
 
 
 /* =====================================================================

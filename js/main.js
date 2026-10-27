@@ -13,8 +13,8 @@
    5. Maths written as $…$ is typeset with KaTeX (assets/vendor/katex).
    6. Wide maps on phones start scrolled to their centre.
    7. E-mail addresses marked class="copy-email" are copied with a click.
-   8. The Participants table: a search box, a "Sort by" menu (name,
-      surname, institution, position) and a count by position.
+   8. The Participants table: a search box, sorting by a click on the
+      arrow of a column heading, and a count by position.
    Preview mode: open any page with ?preview after its address to see the
    example entries (data-preview-only); visitors never see them.
 
@@ -174,17 +174,15 @@
   /* ---------- 8. Searchable, sortable table (Participants) ----------
      <div data-list-tools="TABLE-ID">
        <input type="search" data-filter-for="TABLE-ID">
-       <select data-sort-for="TABLE-ID">
-         <option value="">List order</option>        (the order in the file)
-         <option value="0">Name</option>              (column 1, alphabetical by first name)
-         <option value="1:group">Institution</option> (column 2: everyone from the same
-                                                       institution together, institutions
-                                                       and names alphabetical)
-         <option value="2:rank">Position</option>     (column 3, in the groups of data-rank)
-       </select>
-     Add ":surname" to a value (e.g. "0:surname") to sort by the last word.
        <p data-count-for="TABLE-ID"></p>
      </div>
+     Column headings with data-sort get a clickable arrow: the first click
+     sorts by that column, the next click reverses it.
+       <th scope="col" data-sort="0">Name</th>              alphabetical by first name
+       <th scope="col" data-sort="1:group">Institution</th>  everyone from the same institution
+                                                             together, then names alphabetical
+       <th scope="col" data-sort="2:rank">Position</th>      in the groups of data-rank
+     (":surname", e.g. data-sort="0:surname", sorts by the last word.)
      <table id="TABLE-ID" data-count-label="participant"
             data-rank-column="2" data-rank="faculty professor … | postdoc … | student …">
      data-rank lists the groups of the Position column, in order, separated
@@ -212,7 +210,7 @@
         rows.push({ el: row, i: rows.length, cells: Array.prototype.map.call(row.cells, cellText), text: fold(row.textContent.replace(/\s+/g, " ")) });
       }
       var input = box.querySelector("[data-filter-for]");
-      var sorter = box.querySelector("[data-sort-for]");
+      var sorter = box.querySelector("[data-sort-for]");   /* an optional <select>, as in earlier versions */
       var count = box.querySelector("[data-count-for]");
       var one = table.getAttribute("data-count-label") || "entry";
       var many = table.getAttribute("data-count-label-plural") || (one === "entry" ? "entries" : one + "s");
@@ -245,8 +243,10 @@
       var groupKey = function (s) { return fold(s).replace(/[^a-z0-9]+/g, " ").trim(); };
       var groupOf = function (x, col, mode) { return mode === "rank" ? String(rankOf(x.cells[col] || "")) : groupKey(x.cells[col] || ""); };
 
+      var state = { v: "", dir: 1 };   /* which column, and 1 = up (A to Z) or -1 = down */
       var sortRows = function () {
-        var v = sorter ? sorter.value : "", col = parseInt(v, 10), mode = v.split(":")[1] || "";
+        var v = sorter ? sorter.value : state.v, dir = sorter ? 1 : state.dir;
+        var col = parseInt(v, 10), mode = v.split(":")[1] || "";
         var list = rows.slice();
         if (v !== "" && !isNaN(col)) {
           list.sort(function (a, z) {
@@ -255,18 +255,38 @@
             else if (mode === "group") r = cmp(groupKey(a.cells[col] || ""), groupKey(z.cells[col] || ""));
             else if (mode === "surname") r = cmp(surname(a.cells[col] || ""), surname(z.cells[col] || ""));
             else r = cmp(a.cells[col] || "", z.cells[col] || "");
-            return r || cmp(a.cells[0] || "", z.cells[0] || "") || a.i - z.i;
+            r *= dir;
+            /* within an institution or a position group, names stay alphabetical */
+            return r || (col === 0 ? 0 : cmp(a.cells[0] || "", z.cells[0] || "")) || a.i - z.i;
           });
         } else list.sort(function (a, z) { return a.i - z.i; });
         list.forEach(function (x) { body.appendChild(x.el); });
         grouping = (mode === "group" || mode === "rank") && !isNaN(col) ? { col: col, mode: mode } : null;
         markGroups();
-        /* tell screen readers which column the list is sorted by */
+        /* the arrow of the sorted column lights up; screen readers hear the order */
         var heads = table.tHead ? table.tHead.rows[0].cells : [];
         for (var h = 0; h < heads.length; h++) {
-          if (v !== "" && h === col) heads[h].setAttribute("aria-sort", "ascending"); else heads[h].removeAttribute("aria-sort");
+          if (v !== "" && h === col) heads[h].setAttribute("aria-sort", dir === 1 ? "ascending" : "descending"); else heads[h].removeAttribute("aria-sort");
         }
       };
+
+      /* turn the headings marked data-sort into buttons with an up/down arrow */
+      var ARROWS = '<svg viewBox="0 0 10 16" width="10" height="16" aria-hidden="true" focusable="false"><path class="sort-btn__up" d="M5 1.5 9 6.5H1z"/><path class="sort-btn__down" d="M5 14.5 1 9.5h8z"/></svg>';
+      Array.prototype.forEach.call(table.tHead ? table.tHead.rows[0].cells : [], function (th) {
+        var v = th.getAttribute("data-sort");
+        if (v === null || th.querySelector(".sort-btn")) return;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "sort-btn";
+        while (th.firstChild) btn.appendChild(th.firstChild);
+        btn.insertAdjacentHTML("beforeend", ARROWS);
+        btn.title = "Sort by " + btn.textContent.trim().toLowerCase();
+        th.appendChild(btn);
+        btn.addEventListener("click", function () {
+          if (state.v === v) state.dir = -state.dir; else { state.v = v; state.dir = 1; }
+          sortRows();
+        });
+      });
 
       /* when sorted by institution or position, a line separates the groups */
       var grouping = null;

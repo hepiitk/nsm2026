@@ -132,7 +132,7 @@ Search for the section name, copy the template inside the comment, paste it wher
 
 Search all `.html` files for `tba` to find every remaining one.
 
-**Header and footer** appear on every page. In the visual editor, change them once and every page follows. By hand, change a menu item, the office phone or a footer link in every `.html` file (on GitHub, search the repository; in VS Code, "Find in files").
+**Header and footer** appear on every page. In the visual editor, change them once and every page follows. By hand, change a menu item, the contact e-mail or a footer link in every `.html` file (on GitHub, search the repository; in VS Code, "Find in files").
 
 **Maths** works anywhere in the text: `$\mathcal{N}=4$` inline, `$$ … $$` on its own line.
 
@@ -173,6 +173,8 @@ The steps under "How to register" are hidden for now (`hidden` in each `<li>`); 
 
 ### 4.4 E-mail addresses and phone numbers
 
+The organisers' address is **nsm2026iitk@proton.me**. It appears in the footer of every page (a click opens the e-mail program) and in the Contact card of the Information page (a click copies it). To change it, use the editor's **Site → Find and replace**, or search all `.html` files for it.
+
 On the Information page (`CONTACT`), each e-mail address is written as
 
 ```html
@@ -200,7 +202,9 @@ A click copies the address and shows "Copied ✓" (`js/main.js`, section 7). Wit
 For a long list use the editor: **Page → Fill a table from a spreadsheet**. It puts the name, institution and position columns of the spreadsheet in the right places by itself.
 
 - **Position:** write Faculty, Postdoc or Student. Longer words work too ("PhD student", "Assistant Professor", "Postdoctoral fellow"): the `data-rank` attribute of the `<table>` lists which words belong to which group.
-- **Above the table**, visitors get a search box, a **Sort by** menu and a count such as "42 participants · 10 faculty · 12 postdocs · 20 students". The menu offers List order (the order in the file), Name (by first name), Institution (everyone from the same institution together, then names alphabetically; "IIT Kanpur", "IIT, Kanpur" and "iit kanpur" count as one) and Position (faculty, postdocs, students). A line separates the groups.
+- **Search and count:** above the table, a search box (name, institution or position) and a count such as "42 participants · 10 faculty · 12 postdocs · 20 students".
+- **Sorting:** visitors click the arrow next to **Name** (by first name), **Institution** (everyone from the same institution together, then names alphabetically; "IIT Kanpur", "IIT, Kanpur" and "iit kanpur" count as one) or **Position** (faculty, postdocs, students). A second click reverses the order. A line separates the groups. The arrows come from `data-sort` on each `<th>` heading; until a visitor clicks, the order is the order in the file.
+- **Trying it out:** 26 made-up example rows are in the file, visible only with `?preview` (<https://hepiitk.github.io/nsm2026/participants.html?preview>). Delete them once the real list is in.
 
 ### 4.8 Shortlisted posters and talks
 
@@ -274,7 +278,7 @@ index.html               Home: hero + string animation, IIT Kanpur photo slidesh
 registration.html        Registration: dates, form, how to register, fees
 speakers.html            Speakers
 shortlisted.html         Shortlisted Posters & Talks (two lists)
-participants.html        Participants: table with search, Sort by and counts
+participants.html        Participants: table with search, sorting arrows and counts
 schedule.html            Day-by-day timetable + Talk Materials (slides, videos)
 venue-organizers.html    Information: venues, food and coffee, campus plan, getting here,
                          accommodation, organising committee, contact
@@ -290,7 +294,7 @@ js/slideshow.js          The photo slideshow on the home page
 js/gallery.js            The photo viewer of the Gallery page
 js/editor.js             The visual editor (used only by edit.html)
 
-assets/images/           Emblem, campus plan, favicon
+assets/images/           NSM 2026 logo (favicon.svg + PNG copies), IIT Kanpur emblem, campus plan
 assets/images/campus/    Photos for the home-page slideshow
 assets/images/places/    Photos of the places to eat (Information page)
 assets/images/gallery/   Gallery photos (+ thumbs/ with small copies for the grid)
@@ -327,7 +331,7 @@ Content © 2026 Department of Physics, IIT Kanpur. Third-party parts keep their 
 | `assets/images/uploads/images-2.jpeg` | Outreach Auditorium, supplied by the organisers (October 2026). | **To complete:** photographer or source, and permission. |
 | `assets/images/places/*.jpg` | Places to eat on campus, supplied by the organisers (October 2026); scaled or cropped to a 4 : 3 shape. | **To complete:** photographer or source, and permission. |
 | `assets/images/gallery/…` (when added) | Photos of the meeting. | **To complete:** photographer of each photo, and permission to publish it. |
-| `assets/images/favicon.svg` | Made for this site. | Free to use. |
+| `assets/images/favicon.svg` (the NSM 2026 logo), `favicon-32.png`, `apple-touch-icon.png` | The NSM 2026 logo, made for this site (October 2026): a vibrating closed string around the letters NSM, drawn with the same vibration modes as the string animation. Letters in EB Garamond and IBM Plex Mono, converted to shapes. | © 2026 Department of Physics, IIT Kanpur. |
 | Fonts | EB Garamond, Newsreader, Instrument Sans, IBM Plex Mono | SIL Open Font License 1.1 (`assets/fonts/LICENSE-*.txt`) |
 | KaTeX 0.16.11 | <https://katex.org> | MIT (`assets/vendor/katex/LICENSE.txt`) |
 

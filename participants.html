@@ -66,8 +66,9 @@
        PARTICIPANTS
        One <tr> per person: the name in <th scope="row">, then the
        institution and the position (Faculty, Postdoc or Student) in <td>.
-       The order on the page is the order here; visitors can re-sort it
-       with the "Sort by" menu.
+       The order on the page is the order here; visitors can re-sort it by
+       clicking the arrow next to Name, Institution or Position (click
+       again to reverse). data-sort on each heading switches its arrow on.
 
        ▸ EASIEST FOR A LONG LIST: open the visual editor (edit.html), go to
          this page and choose  Page → Fill a table from a spreadsheet…
@@ -85,7 +86,7 @@
        ▸ ANOTHER COLUMN: in the editor click a cell and use Insert → A new
          column after the clicked cell. By hand: add a <th scope="col"> in
          <thead> and a <td> to every row.
-       ▸ The search box, the "Sort by" menu and the count ("42 participants
+       ▸ The search box, the sorting arrows and the count ("42 participants
          · 10 faculty · 12 postdocs · 20 students") work by themselves
          (js/main.js, section 8).
        =================================================================== -->
@@ -97,29 +98,20 @@
           <label class="list-tools__label" for="participants-search">Find a participant</label>
           <input class="list-tools__input" id="participants-search" type="search" placeholder="Name, institution or position" autocomplete="off" data-filter-for="participants-table">
         </div>
-        <div class="list-tools__field">
-          <label class="list-tools__label" for="participants-sort">Sort by</label>
-          <select class="list-tools__select" id="participants-sort" data-sort-for="participants-table">
-            <option value="">List order</option>
-            <option value="0">Name</option>
-            <option value="1:group">Institution</option>
-            <option value="2:rank">Position</option>
-          </select>
-        </div>
         <p class="list-tools__count" role="status" data-count-for="participants-table"></p>
       </div>
 
-      <p class="tba-note list-tools__note" data-preview-only hidden>Example names, only for trying the search and the Sort by menu. Visitors do not see them.</p>
+      <p class="tba-note list-tools__note" data-preview-only hidden>Example names, only for trying the search and the sorting arrows. Visitors do not see them.</p>
       <div class="data-table-wrap">
         <table class="data-table data-table--list" id="participants-table" data-count-label="participant" data-rank-column="2" data-rank="faculty professor lecturer scientist | postdoc post-doc postdoctoral | student phd ph.d scholar">
           <caption class="visually-hidden">Participants of the National Strings Meeting 2026</caption>
           <thead>
-            <tr><th scope="col">Name</th><th scope="col">Institution</th><th scope="col">Position</th></tr>
+            <tr><th scope="col" data-sort="0">Name</th><th scope="col" data-sort="1:group">Institution</th><th scope="col" data-sort="2:rank">Position</th></tr>
           </thead>
           <tbody>
             <tr class="row--tba" data-hide-in-preview><th scope="row"><span class="tba">Name TBA</span></th><td>Institution to be announced</td><td>—</td></tr>
 
-            <!-- EXAMPLES (made-up names, for trying the search and the Sort by menu).
+            <!-- EXAMPLES (made-up names, for trying the search and the sorting arrows).
                  Visitors never see them: open participants.html?preview to show them.
                  Delete these rows once the real list is in (the editor's
                  "Fill a table from a spreadsheet" with "Replace" removes them too). -->
@@ -175,7 +167,7 @@
             Department of Physics<br>
             Indian Institute of Technology Kanpur<br>
             Kalyanpur, Kanpur 208016, Uttar Pradesh, India<br>
-            <b>Contact:</b> <a href="tel:+915126797641">0512-679-7641</a> (Office)
+            <b>Contact:</b> <a href="mailto:nsm2026iitk@proton.me">nsm2026iitk@proton.me</a>
           </address>
         </div>
       </div>
