@@ -225,8 +225,15 @@ The Talk Materials section stays hidden while it has no real entries, so nothing
 
 ### 4.11 Information page: venues, food, committee
 
-- **Venues.** The Outreach Auditorium (1) and the New Lecture Hall Complex with L-18 (2) are highlighted on `assets/images/iitk-campus-plan.svg` (search `CONFERENCE VENUES` in that file). Their Google Maps links are in the "Conference location" card, in the caption of the plan and on each day of the schedule.
-- **Food and coffee.** `FOOD AND COFFEE ON CAMPUS`, in three groups: the academic area (Café Coffee Day, Subway, Starbucks), the hostel canteens (a wide card, `place-card--feature`) and elsewhere on campus (CF ’98 Café, OAT, Zing Pizza & Café, the food court). Each place is one `<li class="place-card">` with, as needed, a photo, where it is, a line about it, opening hours and a Google Maps link (in Google Maps: **Share → Copy link**). Photos go in `assets/images/places/`.
+- **Venues.** The Outreach Auditorium (1) and the New Lecture Hall Complex with L-18 (2) are highlighted on `assets/images/iitk-campus-plan.svg` (search `CONFERENCE VENUES` in that file). Their directions links (see **Map links** below) are in the "Conference location" card, in the caption of the plan and on each day of the schedule.
+- **Food and coffee.** `FOOD AND COFFEE ON CAMPUS`, in three groups: the academic area (Café Coffee Day, Subway, Starbucks), the hostel canteens (a wide card, `place-card--feature`) and elsewhere on campus (CF ’98 Café, OAT, Zing Pizza & Café, the food court, the Campus Restaurant and Tadka). Each place is one `<li class="place-card">` with, as needed, a photo, where it is, a line about it, opening hours and a directions link. Photos go in `assets/images/places/`.
+- **Map links.** Every map link on the site opens Google Maps with the route from wherever the visitor is to the place:
+
+  ```
+  https://www.google.com/maps/dir/?api=1&destination=LAT,LNG
+  ```
+
+  (inside an HTML file the `&` is written `&amp;`). To get `LAT,LNG`, right-click the place in Google Maps on a computer and click the numbers at the top of the menu (this copies them). Avoid links from **Share → Copy link** on a route: those start from wherever the route was made. On a phone the link opens the Google Maps app with "Your location" as the start; on a computer the browser asks once for permission to use the location (if it is refused, the visitor types a starting point).
 - **Organising committee.** `ORGANISING COMMITTEE`: one `<li>` per person.
 
 ### 4.12 The home-page slideshow
