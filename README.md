@@ -95,7 +95,7 @@ python3 -m http.server 8000
 | Add photos to the Gallery | On the Gallery page: **Page → Add photos to the gallery**, and pick many photos at once. Each is scaled to web size, gets a small copy for the grid, and a caption you can change by clicking it. |
 | Tables | Click a cell, then **＋**: a new row, a new column after that cell, or delete that cell's column. |
 | Fill a long table at once (participants) | **Page → Fill a table from a spreadsheet**. In Excel or Google Sheets (for example the responses of the registration form), select and copy the rows, paste them, and choose which column goes where. Repeated rows can be left out. You can also open a .csv file. Undo brings the old rows back. |
-| Change where a link goes | Click the link (or select a button) and press the link button. You can also upload a PDF and link to it. Every link of the site opens in the same tab. |
+| Change where a link goes | Click the link (or select a button) and press the link button. You can also upload a PDF and link to it. Links to other websites open in a new tab by themselves; links within the site open in the same tab. |
 | Edit the HTML of anything | `</>` in the block toolbar (one block), **Page → Edit this page's HTML**, or **Site → Files and code** (any file: CSS, JavaScript, README). |
 | Page title and description | **Page → Title and description**. |
 | Add or remove a page | **Page → Add a page** (it can be added to the menu and footer of every page) or **Remove this page**. |
@@ -134,7 +134,7 @@ Search all `.html` files for `tba` to find every remaining one.
 
 **Header and footer** appear on every page. In the visual editor, change them once and every page follows. By hand, change a menu item, the contact e-mail or a footer link in every `.html` file (on GitHub, search the repository; in VS Code, "Find in files").
 
-**Maths** works anywhere in the text: `$\mathcal{N}=4$` inline, `$$ … $$` on its own line.
+**Maths** works anywhere in the text: `$\mathcal{N}=4$` inline, `$$ … $$` on its own line. KaTeX, the maths typesetter, is loaded only by pages that contain a `$`, so pages without maths stay light. The Home and Schedule pages, which already show maths, load it in their HTML; on any other page `js/main.js` fetches it by itself as soon as the text contains a `$`, so nothing needs to be added when you write maths there.
 
 **File names** are case-sensitive on GitHub Pages: `Photo.JPG` and `photo.jpg` are different files. Keep names lower-case, without spaces, and write them in the HTML exactly as they are.
 
@@ -159,7 +159,7 @@ The two halls (Outreach Auditorium and Lecture Hall 18, L-18) are named in the "
 
 ### 4.2 Change a link
 
-A link is `<a href="ADDRESS">visible text</a>`. Change the part between the quotes. All links open in the same tab, so do not add `target="_blank"`. Pages of this site are written as `schedule.html`, a section as `schedule.html#day-2`, other sites as full `https://…` addresses, and e-mails as `mailto:name@iitk.ac.in`.
+A link is `<a href="ADDRESS">visible text</a>`. Change the part between the quotes. Links to other websites (full `https://…` addresses) open in a new tab by themselves (`js/main.js`, section 9), and links within the site open in the same tab, so you never need to add `target="_blank"`. Pages of this site are written as `schedule.html`, a section as `schedule.html#day-2`, other sites as full `https://…` addresses, and e-mails as `mailto:name@iitk.ac.in`.
 
 ### 4.3 The registration form
 
@@ -258,6 +258,7 @@ Four photos of IIT Kanpur cross-fade every 6 seconds while each slowly drifts an
 - **Colours and fonts:** `css/style.css`, section 1. `--ember` is the accent colour, `--link` the link colour, `--paper` the background.
 - **String animation:** size and position in `css/style.css`, section 4 (`--string-size`, `--string-shift-x`, `--string-shift-y`); speed and labels in the `CONFIG` block of `js/string-animation.js`.
 - **Logo:** replace `assets/images/iitk-emblem.png` (header) and `assets/images/iitk-emblem-white.png` (footer) with files of the same names.
+- **Fonts are trimmed to what the site uses**, to keep pages light: Newsreader offers weights 400 to 800 (nothing lighter) and Instrument Sans only its normal width. Every weight the stylesheet uses is there; a weight below 400 would show as 400.
 
 ---
 
@@ -295,7 +296,8 @@ README.md                This file
 
 css/style.css            The whole design. Section 1 = colours and fonts
 js/main.js               Mobile menu, empty sections, maths, preview mode, copy-on-click
-                         e-mails, the participants search and sort
+                         e-mails, the participants search and sort, new tab for links
+                         to other websites
 js/string-animation.js   The string animation on the home page
 js/slideshow.js          The photo slideshow on the home page
 js/gallery.js            The photo viewer of the Gallery page
@@ -346,6 +348,6 @@ Content © 2026 Department of Physics, IIT Kanpur. Third-party parts keep their 
 
 ## 9. Accessibility and browsers
 
-Every page has a skip link, one main heading, labelled sections, visible keyboard focus, text contrast at WCAG AA, no colour-only cues and alt text on images. The pages were checked with axe-core at desktop and phone widths. Every internal link and button was click-tested, and all links open in the same tab. Visitors who ask their system for reduced motion get still pages: the string animation stops, and the slideshow changes photos with a plain cross-fade, without drift or zoom. The site works in current Chrome, Edge, Firefox and Safari, on desktop and phone.
+Every page has a skip link, one main heading, labelled sections, visible keyboard focus, text contrast at WCAG AA, no colour-only cues and alt text on images. The pages were checked with axe-core at desktop and phone widths. Every internal link and button was click-tested. Links within the site open in the same tab, and links to other websites open in a new tab. Visitors who ask their system for reduced motion get still pages: the string animation stops, and the slideshow changes photos with a plain cross-fade, without drift or zoom. The site works in current Chrome, Edge, Firefox and Safari, on desktop and phone.
 
 Questions about the meeting: see the [Contact section](https://hepiitk.github.io/nsm2026/venue-organizers.html#contact) of the Information page.

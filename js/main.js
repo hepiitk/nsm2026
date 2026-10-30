@@ -11,10 +11,14 @@
    4. Photos marked  data-optional-image  are hidden if the file is
       missing, instead of showing a broken-image icon.
    5. Maths written as $…$ is typeset with KaTeX (assets/vendor/katex).
+      A page that does not load KaTeX itself gets it only if it contains
+      a $ sign, so pages without maths never download it.
    6. Wide maps on phones start scrolled to their centre.
    7. E-mail addresses marked class="copy-email" are copied with a click.
    8. The Participants table: a search box, sorting by a click on the
       arrow of a column heading, and a count by position.
+   9. Links to other websites open in a new tab (links within this site
+      open in the same tab).
    Preview mode: open any page with ?preview after its address to see the
    example entries (data-preview-only); visitors never see them.
 
@@ -104,8 +108,42 @@
       throwOnError: false
     });
   }
-  if (document.readyState === "complete") typeset();
-  else window.addEventListener("load", typeset);
+  /* Is there a $ in the text of the page (outside code, scripts …)? */
+  function hasMaths() {
+    var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), node;
+    while ((node = walk.nextNode())) {
+      if (node.nodeValue.indexOf("$") >= 0 && !node.parentNode.closest("script, noscript, style, textarea, pre, code")) return true;
+    }
+    return false;
+  }
+  /* Load KaTeX (style sheet, then the two scripts); done() runs when all are in. */
+  function loadKatex(done) {
+    var base = "assets/vendor/katex/", waiting = 2;
+    function ready() { if (--waiting === 0) done(); }
+    var css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = base + "katex.min.css";
+    css.onload = css.onerror = ready;
+    document.head.appendChild(css);
+    var lib = document.createElement("script");
+    lib.src = base + "katex.min.js";
+    lib.onload = function () {
+      var auto = document.createElement("script");
+      auto.src = base + "auto-render.min.js";
+      auto.onload = auto.onerror = ready;
+      document.head.appendChild(auto);
+    };
+    lib.onerror = ready;
+    document.head.appendChild(lib);
+  }
+  /* As before, the maths is typeset once the page has loaded. A page without
+     KaTeX in its HTML starts fetching it straight away if it has a $ sign. */
+  var katexIn = typeof window.renderMathInElement === "function";
+  var pageLoaded = document.readyState === "complete";
+  function maths() { if (katexIn && pageLoaded) typeset(); }
+  if (!katexIn && hasMaths()) loadKatex(function () { katexIn = true; maths(); });
+  if (pageLoaded) maths();
+  else window.addEventListener("load", function () { pageLoaded = true; maths(); });
 
   /* ---------- 7. E-mail addresses that copy on click ----------
      <a class="copy-email" href="mailto:name@iitk.ac.in">name@iitk.ac.in</a>
@@ -323,4 +361,24 @@
       update();
     })(boxes[b]);
   }
+
+  /* ---------- 9. Links to other websites open in a new tab ----------
+     A link counts as "another website" when it starts with http:// or
+     https:// and leads outside this site (a different address, or the
+     same address outside the folder of this site). Links within the site,
+     e-mail and phone links are left alone. Works for links added later. */
+  var siteHome = location.protocol + "//" + location.host + location.pathname.replace(/[^\/]*$/, "");
+  function markExternal(a) {
+    if (!a || a.hasAttribute("target")) return;
+    var href = a.getAttribute("href") || "";
+    if (!/^https?:\/\//i.test(href) || a.href.indexOf(siteHome) === 0) return;
+    a.setAttribute("target", "_blank");
+    var rel = (a.getAttribute("rel") || "").split(/\s+/);
+    if (rel.indexOf("noopener") < 0) a.setAttribute("rel", (rel.join(" ") + " noopener").trim());
+  }
+  var links = document.querySelectorAll("a[href]");
+  for (var l = 0; l < links.length; l++) markExternal(links[l]);
+  document.addEventListener("click", function (e) {
+    if (e.target.closest) markExternal(e.target.closest("a[href]"));
+  }, true);
 })();

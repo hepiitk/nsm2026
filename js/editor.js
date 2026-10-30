@@ -1803,7 +1803,8 @@
             range.insertNode(el);
           }
           el.setAttribute("href", v);
-          /* every link of the site opens in the same tab */
+          /* no target in the HTML: links within the site open in the same tab,
+             and js/main.js opens links to other websites in a new tab */
           el.removeAttribute("target");
           if (/^(noopener|noreferrer|noopener noreferrer)$/.test(el.getAttribute("rel") || "")) el.removeAttribute("rel");
         });
@@ -2233,7 +2234,7 @@
         if (a.closest("[hidden]")) return;   /* hidden examples are not checked */
         var href = a.getAttribute("href").trim(), t = txt(a) || a.getAttribute("aria-label") || (qs("img[alt]", a) ? qs("img[alt]", a).getAttribute("alt") : "");
         if (!t) add(a, "error", "A link has no text.");
-        if (a.getAttribute("target") === "_blank") add(a, "warn", "“" + t + "” opens in a new tab; the site's links open in the same tab.");
+        if (a.getAttribute("target") === "_blank" && !/^https?:/i.test(href)) add(a, "warn", "“" + t + "” opens in a new tab; links within the site open in the same tab.");
         if (/^(https?:|mailto:|tel:)/i.test(href)) return;
         if (/^javascript:/i.test(href)) { add(a, "error", "“" + t + "” runs a script instead of linking."); return; }
         var hashAt = href.indexOf("#"), path = hashAt >= 0 ? href.slice(0, hashAt) : href, anchor = hashAt >= 0 ? href.slice(hashAt + 1) : "";
@@ -2346,7 +2347,7 @@
         "<li><b>Long lists</b> (participants, fees …): <b>Page → Fill a table from a spreadsheet</b>. Copy the rows in Excel or Google Sheets (or open a .csv file), paste them, choose which column goes where, and the table is filled in one step, sorted if you like.</li></ul>" +
         "<h3>Photos and links</h3><ul>" +
         "<li>Double-click a photo, or drop a photo file onto it, to replace it. New photos are scaled to web size and stored in <code>" + esc(CONFIG.imageFolder) + "</code>.</li>" +
-        "<li>Click a link (or select a button) and use the link button to change where it goes, or upload a PDF and link to it. Every link opens in the same tab.</li>" +
+        "<li>Click a link (or select a button) and use the link button to change where it goes, or upload a PDF and link to it. Links to other websites open in a new tab; links within the site open in the same tab.</li>" +
         "<li><b>Gallery:</b> on the Gallery page choose <b>Page → Add photos to the gallery</b> and pick many photos at once. Each gets a small copy for the grid; click a caption to change it, select a photo to move or remove it.</li></ul>" +
         "<h3>Pages and the whole site</h3><ul>" +
         "<li><b>Page</b> menu: title and description, the page's HTML, add a page (it can go into the menu automatically), remove a page.</li>" +
