@@ -169,7 +169,7 @@ Each resource is linked once on the page: SBI Collect in the text of Step 1, the
 
 ### 4.4 E-mail addresses and phone numbers
 
-The organisers' address is **nsm2026iitk@proton.me**. It appears in the footer of every page (a click opens the e-mail program) and in the Contact card of the Information page (a click copies it). To change it, use the editor's **Site → Find and replace**, or search all `.html` files for it.
+The organisers' main address is **nsm2026iitk@proton.me**, with **akaviraj@iitk.ac.in** and **pushkars21@iitk.ac.in** in CC. The main address is in the footer of every page. All three are in the Contact card of the Information page and in the bulk-payments note of the Registration page; there, the link of the main address opens a new e-mail with the other two already in CC (`mailto:nsm2026iitk@proton.me?cc=akaviraj@iitk.ac.in,pushkars21@iitk.ac.in`). To change an address, use the editor's **Site → Find and replace**, or search all `.html` files for it.
 
 On the Information page (`CONTACT`), each e-mail address is written as
 
@@ -177,7 +177,7 @@ On the Information page (`CONTACT`), each e-mail address is written as
 <li><a class="copy-email" href="mailto:name@iitk.ac.in">name@iitk.ac.in</a></li>
 ```
 
-A click copies the address and shows "Copied ✓" (`js/main.js`, section 7). Without JavaScript the link opens the e-mail program instead. Phone numbers are written `<a href="tel:+915122590000">0512-259-0000</a>`; the template is in the same comment.
+A click on the address opens the e-mail program; a small "Copy" button added after it copies the address and shows "Copied ✓" (`js/main.js`, section 7). Phone numbers are written `<a href="tel:+915122590000">0512-259-0000</a>`; the template is in the same comment.
 
 ### 4.5 Announcements
 
@@ -230,7 +230,7 @@ The Talk Materials section stays hidden while it has no real entries, so nothing
   ```
 
   (inside an HTML file the `&` is written `&amp;`). To get `LAT,LNG`, right-click the place in Google Maps on a computer and click the numbers at the top of the menu (this copies them). Avoid links from **Share → Copy link** on a route: those start from wherever the route was made. On a phone the link opens the Google Maps app with "Your location" as the start; on a computer the browser asks once for permission to use the location (if it is refused, the visitor types a starting point).
-- **Organising committee.** `ORGANISING COMMITTEE`: one `<li>` per person.
+- **Local organising committee.** `LOCAL ORGANISING COMMITTEE`: the String Theory Group, Department of Physics, linked to the members page of its website. To list people instead, use one `<li>` per person (template in the comment).
 
 ### 4.12 The home-page slideshow
 
@@ -285,14 +285,14 @@ shortlisted.html         Shortlisted Posters & Talks (two lists)
 participants.html        Participants: table with search, sorting arrows and counts
 schedule.html            Day-by-day timetable + Talk Materials (slides, videos)
 venue-organizers.html    Information: venues, food and coffee, campus plan, getting here,
-                         accommodation, organising committee, contact
+                         accommodation, local organising committee, contact
 gallery.html             Photo gallery (empty until photos are added)
 edit.html                The visual editor (a tool for organisers)
 README.md                This file
 
 css/style.css            The whole design. Section 1 = colours and fonts
-js/main.js               Mobile menu, empty sections, maths, preview mode, copy-on-click
-                         e-mails, the participants search and sort, new tab for links
+js/main.js               Mobile menu, empty sections, maths, preview mode, "Copy" buttons
+                         for e-mails, the participants search and sort, new tab for links
                          to other websites
 js/string-animation.js   The string animation on the home page
 js/slideshow.js          The photo slideshow on the home page

@@ -14,7 +14,7 @@
       A page that does not load KaTeX itself gets it only if it contains
       a $ sign, so pages without maths never download it.
    6. Wide maps on phones start scrolled to their centre.
-   7. E-mail addresses marked class="copy-email" are copied with a click.
+   7. E-mail addresses marked class="copy-email" get a "Copy" button.
    8. The Participants table: a search box, sorting by a click on the
       arrow of a column heading, and a count by position.
    9. Links to other websites and to PDF files open in a new tab (other
@@ -145,14 +145,28 @@
   if (pageLoaded) maths();
   else window.addEventListener("load", function () { pageLoaded = true; maths(); });
 
-  /* ---------- 7. E-mail addresses that copy on click ----------
+  /* ---------- 7. E-mail addresses with a "Copy" button ----------
      <a class="copy-email" href="mailto:name@iitk.ac.in">name@iitk.ac.in</a>
-     A click copies the address and shows "Copied"; if the browser cannot
-     copy, the link opens the e-mail program as usual. */
+     A click on the address opens the e-mail program, as with any e-mail
+     link. A small "Copy" button is added after it: it copies the address
+     and shows "Copied ✓" for a moment. */
+  var emailOf = function (a) {
+    var addr = (a.textContent || "").trim();
+    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(addr)) addr = (a.getAttribute("href") || "").replace(/^mailto:/i, "").split("?")[0];
+    return addr;
+  };
   var copyLinks = document.querySelectorAll("a.copy-email");
   for (var c = 0; c < copyLinks.length; c++) {
-    copyLinks[c].setAttribute("data-copy-ready", "");
-    copyLinks[c].setAttribute("title", "Click to copy the address");
+    var link = copyLinks[c], addr = emailOf(link);
+    var next = link.nextElementSibling;
+    if (!addr || (next && next.classList.contains("copy-btn"))) continue;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    btn.setAttribute("data-copy", addr);
+    btn.setAttribute("aria-label", "Copy " + addr);
+    link.parentNode.insertBefore(btn, link.nextSibling);
   }
   if (!window.NSM_COPY_READY) {
     window.NSM_COPY_READY = true;
@@ -184,18 +198,16 @@
       });
     };
     document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest("a.copy-email");
-      if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-      var addr = (a.textContent || "").trim();
-      if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(addr)) addr = (a.getAttribute("href") || "").replace(/^mailto:/i, "").split("?")[0];
-      if (!addr) return;
-      e.preventDefault();
+      var b = e.target.closest && e.target.closest("button.copy-btn");
+      if (!b) return;
+      var addr = b.getAttribute("data-copy");
       copyText(addr).then(function () {
-        a.classList.add("is-copied");
+        b.classList.add("is-copied");
+        b.textContent = "Copied ✓";
         announce("Copied " + addr);
-        clearTimeout(a.copyTimer);
-        a.copyTimer = setTimeout(function () { a.classList.remove("is-copied"); }, 2000);
-      }, function () { window.location.href = a.href; });
+        clearTimeout(b.copyTimer);
+        b.copyTimer = setTimeout(function () { b.classList.remove("is-copied"); b.textContent = "Copy"; }, 2000);
+      }, function () { window.prompt("Copy the address:", addr); });
     });
   }
 
