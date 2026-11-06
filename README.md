@@ -134,7 +134,7 @@ Search all `.html` files for `tba` to find every remaining one.
 
 **Header and footer** appear on every page. In the visual editor, change them once and every page follows. By hand, change a menu item, the contact e-mail or a footer link in every `.html` file (on GitHub, search the repository; in VS Code, "Find in files").
 
-**Maths** works anywhere in the text: `$\mathcal{N}=4$` inline, `$$ … $$` on its own line. KaTeX, the maths typesetter, is loaded only by pages that contain a `$`, so pages without maths stay light. The Home and Schedule pages, which already show maths, load it in their HTML; on any other page `js/main.js` fetches it by itself as soon as the text contains a `$`, so nothing needs to be added when you write maths there.
+**Maths** works anywhere in the text: `$\mathcal{N}=4$` inline, `$$ … $$` on its own line. KaTeX, the maths typesetter, is loaded only by pages that contain a `$`, so pages without maths stay light. The Schedule page, which already shows maths, loads it in its HTML; on any other page `js/main.js` fetches it by itself as soon as the text contains a `$`, so nothing needs to be added when you write maths there.
 
 **File names** are case-sensitive on GitHub Pages: `Photo.JPG` and `photo.jpg` are different files. Keep names lower-case, without spaces, and write them in the HTML exactly as they are.
 
@@ -159,17 +159,13 @@ The two halls (Outreach Auditorium and Lecture Hall 18, L-18) are named in the "
 
 ### 4.2 Change a link
 
-A link is `<a href="ADDRESS">visible text</a>`. Change the part between the quotes. Links to other websites (full `https://…` addresses) open in a new tab by themselves (`js/main.js`, section 9), and links within the site open in the same tab, so you never need to add `target="_blank"`. Pages of this site are written as `schedule.html`, a section as `schedule.html#day-2`, other sites as full `https://…` addresses, and e-mails as `mailto:name@iitk.ac.in`.
+A link is `<a href="ADDRESS">visible text</a>`. Change the part between the quotes. Links to other websites (full `https://…` addresses) and to PDF files open in a new tab by themselves (`js/main.js`, section 9), and other links within the site open in the same tab, so you never need to add `target="_blank"`. Pages of this site are written as `schedule.html`, a section as `schedule.html#day-2`, other sites as full `https://…` addresses, and e-mails as `mailto:name@iitk.ac.in`.
 
 ### 4.3 The registration form
 
-Registration is a single step, on `registration.html`. When the form is ready, put its link in the "Form" row (replacing `<span class="tba">Link to be added</span>`) and replace the comment `BUTTON GOES HERE` with
+`registration.html`, in this order: **Registration fees** (one `<tr>` per category) with the **Status** box (opening and closing dates, form link); **How to register**, three steps (pay on SBI Collect, download the receipt, fill in the Google Form); **Payment details**, what to select and enter on SBI Collect (course code, title, duration, participant categories); and the **Bulk payments** note. The payment instructions with pictures are `assets/docs/sbi-collect-payment-instructions.pdf`.
 
-```html
-<a class="btn btn--primary" href="https://YOUR-FORM-LINK">Open the registration form</a>
-```
-
-The steps under "How to register" are hidden for now (`hidden` in each `<li>`); remove `hidden` to show them, and the "steps will be posted" note disappears by itself. Fill in the fees table. The home page has a summary card ("03 · REGISTRATION") and an announcement under "News": keep them in step.
+Each resource is linked once on the page: SBI Collect in the text of Step 1, the payment instructions PDF as the button of Step 1, and the Google Form as the button of Step 3. When registration closes, change the "Registration is open" line in the Status box. The home page has a summary card ("03 · REGISTRATION"), an announcement under "News" and the important dates: keep them in step with this page.
 
 ### 4.4 E-mail addresses and phone numbers
 
@@ -189,7 +185,7 @@ A click copies the address and shows "Copied ✓" (`js/main.js`, section 7). Wit
 
 ### 4.6 Speakers
 
-`speakers.html` → `SPEAKERS`: one `<li class="speaker">` per person (name, institute, optional homepage link, talk title). Copy the template in the comment and delete the "TBA" row when the first speaker is added. The order on the page is the order in the file.
+`speakers.html` → `SPEAKERS`: a table of the confirmed speakers, one `<tr>` per person with the name and the affiliation, in alphabetical order by first name. Copy the template in the comment to add a speaker at their place in the alphabet, and write each institute the same way every time (for example IIT Kharagpur, IISER Bhopal, TIFR). The "Please note: this list is not final yet" line above the table can be deleted once the list is final.
 
 ### 4.7 Participants
 
@@ -212,7 +208,7 @@ For a long list use the editor: **Page → Fill a table from a spreadsheet**. It
 
 ### 4.9 The schedule
 
-`schedule.html`: each day is a `<section class="day" id="day-N">` and each row an `<li class="slot slot--KIND">`, where the kind is `review`, `talk`, `poster`, `discussion`, `break` or `social`. The template with every field is in the comment "HOW THE TIMETABLE WORKS". Delete the "Sessions to be announced" row of a day once it has real rows. Each day's venue links to Google Maps.
+`schedule.html`: each day is a `<section class="day" id="day-N">` and each row an `<li class="slot slot--KIND">`, where the kind is `review`, `talk`, `poster`, `discussion`, `break` or `social`. The template with every field is in the comment "HOW THE TIMETABLE WORKS". Delete the "Sessions to be announced" row of a day once it has real rows. Each day names its venue; directions to both venues are linked once, in the page introduction (to the Information page).
 
 To add a day, copy a whole day section, change its number, and add a link for it in the day links at the top. The example rows (`data-preview-only hidden`) are invisible to visitors: copy one, delete `data-preview-only hidden` and the Example badge, and edit it.
 
@@ -225,7 +221,7 @@ The Talk Materials section stays hidden while it has no real entries, so nothing
 
 ### 4.11 Information page: venues, food, committee
 
-- **Venues.** The Outreach Auditorium (1) and the New Lecture Hall Complex with L-18 (2) are highlighted on `assets/images/iitk-campus-plan.svg` (search `CONFERENCE VENUES` in that file). Their directions links (see **Map links** below) are in the "Conference location" card, in the caption of the plan and on each day of the schedule.
+- **Venues.** The Outreach Auditorium (1) and the New Lecture Hall Complex with L-18 (2) are highlighted on `assets/images/iitk-campus-plan.svg` (search `CONFERENCE VENUES` in that file). Their directions links (see **Map links** below) are in the "Conference location" card (under Maps); the schedule and the caption of the plan point there instead of repeating them.
 - **Food and coffee.** `FOOD AND COFFEE ON CAMPUS`, in three groups: the academic area (Café Coffee Day, Subway, Starbucks), the hostel canteens (a wide card, `place-card--feature`) and elsewhere on campus (CF ’98 Café, OAT, Zing Pizza & Café, the food court, the Campus Restaurant and Tadka). Each place is one `<li class="place-card">` with, as needed, a photo, where it is, a line about it, opening hours and a directions link. Photos go in `assets/images/places/`.
 - **Map links.** Every map link on the site opens Google Maps with the route from wherever the visitor is to the place:
 

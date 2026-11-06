@@ -56,49 +56,61 @@
     <div class="wrap">
       <p class="eyebrow">NSM 2026 · <b>Speakers</b></p>
       <h1><em>Speakers</em></h1>
-      <p class="lead">Speakers will be listed here as they are confirmed. Talk times will appear in the <a href="schedule.html">schedule</a>; shortlisted talks and posters by participants are on the <a href="shortlisted.html">Shortlisted Posters &amp; Talks</a> page.</p>
+      <p class="lead">Speakers at the National Strings Meeting 2026. Talk times will appear in the <a href="schedule.html">schedule</a>, and shortlisted talks and posters by participants are on the <a href="shortlisted.html">Shortlisted Posters &amp; Talks</a> page.</p>
     </div>
   </header>
 
 
   <!-- ===================================================================
        SPEAKERS
-       One <li class="speaker"> per speaker. The order on the page is the
-       order here (e.g. alphabetical by surname). Delete the "TBA" row when
-       the first real speaker is added.
+       One <tr> per confirmed speaker: the name in <th scope="row">, the
+       institute in <td>. The order on the page is the order here
+       (alphabetical by first name). Write each institute the same way
+       every time it appears (e.g. IIT Kharagpur, IISER Bhopal, TIFR).
 
-       TEMPLATE (copy, paste, edit; delete lines you do not need):
-       <li class="speaker">
-         <div>
-           <p class="speaker__name"><a href="https://homepage.example.org">Firstname Surname</a></p>
-           <p class="speaker__affil">Institute</p>
-         </div>
-         <p class="speaker__talk">Title of the talk (maths allowed: $AdS_3$)</p>
-       </li>
-       If there is no homepage, write just the name without <a …> … </a>.
-       If the title is not known yet, write <span class="tba">Title TBA</span>.
+       TEMPLATE (copy inside <tbody>, at its place in the alphabet):
+       <tr><th scope="row">Firstname Surname</th><td>Institute</td></tr>
        =================================================================== -->
   <section class="band" id="speakers" aria-labelledby="speakers-title">
     <div class="wrap">
       <h2 id="speakers-title" class="visually-hidden">Speakers</h2>
 
-      <div class="speaker-head" aria-hidden="true">
-        <span>Speaker</span><span>Talk</span>
-      </div>
-      <ul class="speaker-list">
-          <li class="speaker speaker--tba">
-            <div>
-              <p class="speaker__name"><span class="tba">Name TBA</span></p>
-              <p class="speaker__affil">Institution to be announced</p>
-            </div>
-            <p class="speaker__talk"><span class="tba">Talk title TBA</span></p>
-          </li>
-      </ul>
+      <!-- NOTE — delete this paragraph when the list of speakers is final. -->
+      <p class="callout"><b>Please note:</b> this list is not final yet. Speakers will be added as they confirm, and the list may change.</p>
 
-      <div class="hero__actions">
-        <a class="btn" href="shortlisted.html">Shortlisted posters &amp; talks <span aria-hidden="true">→</span></a>
-        <a class="btn" href="schedule.html">Schedule</a>
+      <div class="data-table-wrap mt-5">
+        <table class="data-table data-table--list speaker-table">
+          <caption class="visually-hidden">Speakers at the National Strings Meeting 2026 (provisional list)</caption>
+          <thead>
+            <tr><th scope="col">Name</th><th scope="col">Affiliation</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Alok Laddha</th><td>CMI</td></tr>
+            <tr><th scope="row">Aritra Banerjee</th><td>BITS Pilani</td></tr>
+            <tr><th scope="row">Ashoke Sen</th><td>ICTS</td></tr>
+            <tr><th scope="row">Bindusar Sahoo</th><td>IISER Thiruvananthapuram</td></tr>
+            <tr><th scope="row">Debajyoti Sarkar</th><td>IIT Indore</td></tr>
+            <tr><th scope="row">Jyotirmoy Bhattacharya</th><td>IIT Kharagpur</td></tr>
+            <tr><th scope="row">Koushik Ray</th><td>IACS</td></tr>
+            <tr><th scope="row">Nabamita Banerjee</th><td>IISER Bhopal</td></tr>
+            <tr><th scope="row">Parijat Dey</th><td>S. N. Bose National Centre for Basic Sciences</td></tr>
+            <tr><th scope="row">Parthajit Biswas</th><td>NIT Puducherry</td></tr>
+            <tr><th scope="row">Pratik Rath</th><td>IIT Bombay</td></tr>
+            <tr><th scope="row">Roji Pius</th><td>IMSc</td></tr>
+            <tr><th scope="row">Ronak Soni</th><td>CMI</td></tr>
+            <tr><th scope="row">Shiraz Minwalla</th><td>TIFR</td></tr>
+            <tr><th scope="row">Sridip Pal</th><td>TIFR</td></tr>
+            <tr><th scope="row">Subramanya Hegde</th><td>University of Hyderabad</td></tr>
+            <tr><th scope="row">Sucheta Majumdar</th><td>Christ University, Bangalore</td></tr>
+            <tr><th scope="row">Suddhasattwa Brahma</th><td>ISI Kolkata</td></tr>
+            <tr><th scope="row">Suman Kundu</th><td>IIT Palakkad</td></tr>
+            <tr><th scope="row">Sunil Mukhi</th><td>Nayanta University</td></tr>
+            <tr><th scope="row">Suresh Govindarajan</th><td>IIT Madras</td></tr>
+            <tr><th scope="row">Suvankar Dutta</th><td>IISER Bhopal</td></tr>
+          </tbody>
+        </table>
       </div>
+
     </div>
   </section>
 

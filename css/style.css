@@ -807,6 +807,11 @@ a:hover { text-decoration-thickness: 2px; }
 .news-item__label { color: var(--ember); }
 .news-item h3 { font-size: 1.5rem; }
 .news-item p { margin-top: var(--sp-2); color: var(--ink-mid); }
+/* An announcement that must stand out (e.g. "Registration is now open!") */
+.news-item--highlight { border-top: 3px solid var(--ember); box-shadow: var(--shadow-1); }
+.news-item--highlight .news-item__label { font-weight: 500; }
+.news-item--highlight h3 { font-size: var(--step-2); color: var(--ink-hi); }
+.news-item .news-item__action { margin-top: var(--sp-4); }
 
 .dates { list-style: none; position: relative; }
 .dates li {
@@ -855,6 +860,7 @@ a:hover { text-decoration-thickness: 2px; }
 .reg-card dt { color: var(--cream-mid); }
 .reg-card dd { color: var(--cream); text-align: right; }
 .reg-card .btn { margin-top: var(--sp-5); }
+.reg-card .status__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cream-accent); box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08); }
 
 /* 9.5 Sponsors ------------------------------------------------------------ */
 .sponsors {
@@ -909,12 +915,51 @@ a.sponsor:hover { border-color: var(--ember); box-shadow: var(--shadow-2); }
 .data-table tbody th { font-weight: 600; color: var(--ink-hi); }
 .table-note { margin-top: var(--sp-3); font-family: var(--font-ui); font-size: 0.9rem; color: var(--ink-mid); }
 
+/* Fees table: the amounts stand out, aligned on the right */
+.fee-table th:last-child, .fee-table td:last-child { text-align: right; padding-right: 0; }
+.fee-table tbody th { font-family: var(--font-text); font-size: 1.15rem; font-weight: 500; }
+.fee-table tbody td { font-family: var(--font-display); font-size: var(--step-2); font-weight: 500; line-height: 1.2; color: var(--ink-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fee-table tbody th, .fee-table tbody td { padding-block: 1rem; vertical-align: baseline; }
+
+/* The three registration steps, side by side on wide screens */
+.reg-steps { list-style: none; display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .reg-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.reg-step { display: flex; flex-direction: column; border-top: 3px solid var(--ember); }
+.reg-step h3 { margin-top: var(--sp-1); }
+.reg-step .reg-step__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: auto; padding-top: var(--sp-5); }
+
+/* Payment details: the values to enter on SBI Collect */
+@media (min-width: 560px) { .pay-facts > div { grid-template-columns: 10.5rem minmax(0, 1fr); } }
+.pay-facts dd b { font-weight: 600; color: var(--ink-hi); }
+.pay-facts dd p { margin: 0; color: var(--ink-hi); }
+.pay-facts__hint { display: block; font-size: 0.88rem; color: var(--ink-low); }
+.pay-facts__options { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0 0.75rem; }
+.pay-facts__options li { padding: 0.15rem 0.6rem; font-size: 0.88rem; background: var(--paper-2); border: 1px solid var(--rule-strong); border-radius: 999px; }
+.card .pay-facts__note { margin-top: 0; padding: 0.6rem 0.8rem; font-size: 0.92rem; color: var(--ink-hi); background: var(--paper-2); border-left: 3px solid var(--ember); border-radius: 0 var(--radius) var(--radius) 0; }
+
+/* An important note that must not be missed (Bulk payments) */
+.notice {
+  padding: clamp(1.4rem, 3vw, 2rem);
+  background: var(--card); border: 1px solid var(--ember); border-left-width: 6px; border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.notice__kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); }
+.notice h2 { margin-top: var(--sp-1); font-size: var(--step-3); }
+.notice p:not(.notice__kicker) { margin-top: var(--sp-3); max-width: 70ch; }
+.notice b { color: var(--ink-hi); }
+
 /* A long list as a table (Participants page): quiet zebra rows, and a
    search box with a count above it (js/main.js, section 8) */
 .data-table--list tbody tr:nth-child(even of :not([hidden])) { background: var(--paper-2); }
 .data-table--list th:first-child, .data-table--list td:first-child { padding-left: 0.75rem; }
 .data-table--list tbody th { font-weight: 500; }
 .data-table--list tbody tr.group-start > * { border-top: 2px solid var(--rule-control); }   /* first row of a new institution or position (Sort by) */
+/* Speakers page: name and affiliation */
+.speaker-table { border-top: 2px solid var(--ink-hi); }
+.speaker-table th:first-child { width: 42%; }
+.speaker-table tbody th { font-family: var(--font-text); font-size: 1.12rem; font-weight: 500; }
+.speaker-table tbody td { color: var(--ink-mid); }
+.speaker-table tbody th, .speaker-table tbody td { padding-block: 0.85rem; vertical-align: baseline; }
 .list-tools {
   display: flex; flex-wrap: wrap; align-items: end; gap: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-4);

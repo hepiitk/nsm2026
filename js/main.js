@@ -17,8 +17,8 @@
    7. E-mail addresses marked class="copy-email" are copied with a click.
    8. The Participants table: a search box, sorting by a click on the
       arrow of a column heading, and a count by position.
-   9. Links to other websites open in a new tab (links within this site
-      open in the same tab).
+   9. Links to other websites and to PDF files open in a new tab (other
+      links within this site open in the same tab).
    Preview mode: open any page with ?preview after its address to see the
    example entries (data-preview-only); visitors never see them.
 
@@ -362,16 +362,19 @@
     })(boxes[b]);
   }
 
-  /* ---------- 9. Links to other websites open in a new tab ----------
+  /* ---------- 9. Links to other websites and PDFs open in a new tab ----------
      A link counts as "another website" when it starts with http:// or
      https:// and leads outside this site (a different address, or the
-     same address outside the folder of this site). Links within the site,
-     e-mail and phone links are left alone. Works for links added later. */
+     same address outside the folder of this site). A link to a PDF file
+     (an address ending in .pdf, such as a file in assets/docs/) also opens
+     in a new tab. Other links within the site, e-mail and phone links are
+     left alone. Works for links added later. */
   var siteHome = location.protocol + "//" + location.host + location.pathname.replace(/[^\/]*$/, "");
   function markExternal(a) {
     if (!a || a.hasAttribute("target")) return;
     var href = a.getAttribute("href") || "";
-    if (!/^https?:\/\//i.test(href) || a.href.indexOf(siteHome) === 0) return;
+    var pdf = /\.pdf$/i.test(href.split(/[?#]/)[0]);
+    if (!pdf && (!/^https?:\/\//i.test(href) || a.href.indexOf(siteHome) === 0)) return;
     a.setAttribute("target", "_blank");
     var rel = (a.getAttribute("rel") || "").split(/\s+/);
     if (rel.indexOf("noopener") < 0) a.setAttribute("rel", (rel.join(" ") + " noopener").trim());
