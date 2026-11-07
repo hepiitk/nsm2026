@@ -649,6 +649,15 @@ a:hover { text-decoration-thickness: 2px; }
 .copy-btn:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 .copy-btn.is-copied, .copy-btn.is-copied:hover { color: #fff; background: var(--link); border-color: var(--link); }
 
+/* The registration deadline: bold and underlined in the accent colour
+   (<strong class="deadline">20 November 2026</strong>), so it is not taken for a link */
+.deadline {
+  font-weight: 700; color: inherit;
+  text-decoration: underline; text-decoration-color: var(--ember);
+  text-decoration-thickness: 2px; text-underline-offset: 0.2em; text-decoration-skip-ink: auto;
+}
+.band--night .deadline { color: #fff; text-decoration-color: var(--cream-accent); }
+
 /* 8.11 A note with confirmed information (unlike the dashed "to be announced" note) */
 .callout {
   padding: 0.9rem 1.1rem; background: var(--paper-2);
