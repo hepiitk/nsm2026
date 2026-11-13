@@ -219,6 +219,7 @@ a:hover { text-decoration-thickness: 2px; }
 .band { padding-block: clamp(3.5rem, 7vw, 6rem); }
 .band--alt { background: var(--paper-2); border-block: 1px solid var(--rule); }
 .band--tight { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.band--snug-top { padding-top: clamp(1.75rem, 3.5vw, 2.75rem); }   /* a list that starts close under the page title (Speakers) */
 
 /* Section heading block */
 .section-head { margin-bottom: clamp(2rem, 4vw, 3rem); max-width: 46rem; }
@@ -975,12 +976,22 @@ a.sponsor:hover { border-color: var(--ember); box-shadow: var(--shadow-2); }
 .data-table--list th:first-child, .data-table--list td:first-child { padding-left: 0.75rem; }
 .data-table--list tbody th { font-weight: 500; }
 .data-table--list tbody tr.group-start > * { border-top: 2px solid var(--rule-control); }   /* first row of a new institution or position (Sort by) */
-/* Speakers page: name and affiliation */
-.speaker-table { border-top: 2px solid var(--ink-hi); }
-.speaker-table th:first-child { width: 42%; }
+/* Speakers page: name and affiliation in a light card with rounded corners */
+.speaker-table-wrap {
+  max-width: 60rem;
+  background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+.data-table.speaker-table th, .data-table.speaker-table td { padding: 0.8rem 1.4rem; vertical-align: baseline; }
+.data-table.speaker-table thead th { padding-block: 0.95rem 0.85rem; background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+.speaker-table th:first-child { width: 46%; }
 .speaker-table tbody th { font-family: var(--font-text); font-size: 1.12rem; font-weight: 500; }
 .speaker-table tbody td { color: var(--ink-mid); }
-.speaker-table tbody th, .speaker-table tbody td { padding-block: 0.85rem; vertical-align: baseline; }
+.speaker-table tbody tr:last-child > * { border-bottom: 0; }
+.speaker-table tbody tr:nth-child(even of :not([hidden])) { background: var(--paper-2); background: color-mix(in srgb, var(--paper-2) 55%, var(--card)); }
+@media (max-width: 560px) {
+  .data-table.speaker-table th, .data-table.speaker-table td { padding-inline: 0.9rem; }
+}
 .list-tools {
   display: flex; flex-wrap: wrap; align-items: end; gap: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-4);
